@@ -26,7 +26,7 @@ public protocol SignaturePadDelegate: class {
     private var incrementalImage: UIImage?
     private var points: [CGPoint] = [CGPoint](repeating: CGPoint(), count: 5)
     private var ctr: Int = 0
-    
+    var isEmpty: Bool = true
     @IBInspectable private var strokeColor: UIColor = UIColor.black
     @IBInspectable private var lineWidth: CGFloat = 3.0
     
@@ -120,7 +120,7 @@ public protocol SignaturePadDelegate: class {
         } else {
             points[0] = path.currentPoint
         }
-        
+        self.isEmpty = path.cgPath.isEmpty
         self.drawBitmap()
         self.setNeedsDisplay()
         path.removeAllPoints()
@@ -175,7 +175,7 @@ public protocol SignaturePadDelegate: class {
     }
     
     open func getSignature() -> UIImage? {
-        guard !path.cgPath.isEmpty else { return nil }
+        guard !self.isEmpty else { return nil }
         UIGraphicsBeginImageContextWithOptions(self.bounds.size, self.isOpaque, 0.0)
         self.drawHierarchy(in: self.bounds, afterScreenUpdates: false)
         let signature = UIGraphicsGetImageFromCurrentImageContext()
