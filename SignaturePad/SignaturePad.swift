@@ -175,6 +175,7 @@ public protocol SignaturePadDelegate: class {
     }
     
     open func getSignature() -> UIImage? {
+        guard !path.cgPath.isEmpty else { return nil }
         UIGraphicsBeginImageContextWithOptions(self.bounds.size, self.isOpaque, 0.0)
         self.drawHierarchy(in: self.bounds, afterScreenUpdates: false)
         let signature = UIGraphicsGetImageFromCurrentImageContext()
