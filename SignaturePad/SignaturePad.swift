@@ -158,6 +158,7 @@ public protocol SignaturePadDelegate: class {
         path = UIBezierPath()
         path.lineWidth = lineWidth
         self.setNeedsDisplay()
+        self.isEmpty = true
     }
     
     open func setSignature(_image: UIImage) {
